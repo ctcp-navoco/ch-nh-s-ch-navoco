@@ -1,11 +1,414 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Chính sách Navoco</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Học viện Navoco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --surface-2:#eef1f8; --text:#151a2d; --muted:#5d6580;
+  --border:#dde2ee; --brand:#2f5bea; --brand-ink:#ffffff; --brand-soft:#e5ecff;
+  --ok:#159a62; --ok-soft:#dcf5e9; --bad:#d43a3a; --bad-soft:#fde4e4; --warn:#b7791f;
+  --shadow:0 1px 2px rgba(20,30,60,.06),0 8px 24px rgba(20,30,60,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1220; --surface:#161b2e; --surface-2:#1e2540; --text:#e8ebf5; --muted:#9aa3c0;
+    --border:#2a3252; --brand:#6b8cff; --brand-ink:#0e1220; --brand-soft:#232d55;
+    --ok:#3fcf8e; --ok-soft:#173a2c; --bad:#ff6b6b; --bad-soft:#3d1d22; --warn:#f0b354;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1220; --surface:#161b2e; --surface-2:#1e2540; --text:#e8ebf5; --muted:#9aa3c0;
+  --border:#2a3252; --brand:#6b8cff; --brand-ink:#0e1220; --brand-soft:#232d55;
+  --ok:#3fcf8e; --ok-soft:#173a2c; --bad:#ff6b6b; --bad-soft:#3d1d22; --warn:#f0b354;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:"Be Vietnam Pro",system-ui,sans-serif;line-height:1.6;font-size:16px}
+a{color:var(--brand)}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.top .wrap{display:flex;align-items:center;gap:12px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:var(--text);text-decoration:none;cursor:pointer}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:800}
+.top nav{margin-left:auto;display:flex;gap:6px;align-items:center}
+.btn{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.notice{background:var(--brand-soft);color:var(--text);font-size:13px;text-align:center;padding:6px 16px}
+
+/* Hero */
+.hero{padding:56px 0 32px}
+.hero h1{font-size:clamp(28px,5vw,46px);line-height:1.15;margin:0 0 14px;letter-spacing:-.02em}
+.hero p.lead{color:var(--muted);font-size:18px;max-width:640px;margin:0 0 24px}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 18px;min-width:140px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:24px}
+.stat span{color:var(--muted);font-size:13px}
+
+.progress{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.progress > i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .4s}
+
+/* Course grid */
+h2.sec{font-size:22px;margin:32px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding-bottom:56px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform .15s,border-color .15s;text-align:left;color:var(--text)}
+.card:hover{transform:translateY(-2px);border-color:var(--brand)}
+.card .ico{width:44px;height:44px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center;font-size:22px}
+.card h3{margin:0;font-size:17px}
+.card p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--surface-2);color:var(--muted)}
+.badge.ok{background:var(--ok-soft);color:var(--ok)}
+
+/* Course view */
+.course{display:grid;grid-template-columns:300px 1fr;gap:24px;padding:24px 0 56px}
+aside.side{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;align-self:start;position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
+.side h4{margin:4px 0 4px;font-size:15px}
+.side .sub{font-size:13px;color:var(--muted);margin-bottom:12px}
+.side ol{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-direction:column;gap:4px}
+.side li button{width:100%;text-align:left;border:0;background:transparent;color:var(--text);padding:9px 10px;border-radius:10px;display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.side li button:hover{background:var(--surface-2)}
+.side li button.active{background:var(--brand-soft);font-weight:600}
+.dot{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;font-size:11px;margin-top:1px}
+.dot.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.lesson{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:var(--shadow);min-width:0}
+.crumb{font-size:13px;color:var(--muted);margin-bottom:6px}
+.lesson h2{margin:0 0 16px;font-size:clamp(22px,3.4vw,28px);letter-spacing:-.01em}
+.lesson .body p{margin:0 0 14px}
+.lesson .body ul{padding-left:20px;margin:0 0 14px}
+.lesson .body li{margin-bottom:6px}
+.callout{border-left:4px solid var(--brand);background:var(--brand-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0}
+.callout.warn{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,var(--surface))}
+.foot{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid var(--border);flex-wrap:wrap}
+
+/* Quiz */
+.q{margin-bottom:22px}
+.q p{font-weight:600;margin:0 0 10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--surface);color:var(--text);padding:11px 14px;border-radius:10px;margin-bottom:8px;font-size:15px}
+.opt:hover{border-color:var(--brand)}
+.opt.sel{border-color:var(--brand);background:var(--brand-soft)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{padding:14px 16px;border-radius:12px;font-weight:600;margin-top:8px}
+.result.ok{background:var(--ok-soft);color:var(--ok)}
+.result.bad{background:var(--bad-soft);color:var(--bad)}
+
+/* Certificate */
+.cert{border:2px solid var(--brand);border-radius:18px;padding:40px 24px;text-align:center;background:var(--surface);box-shadow:var(--shadow);margin:32px 0 56px}
+.cert h2{font-size:30px;margin:8px 0}
+.cert input{font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);width:min(320px,100%);text-align:center;margin:12px 0}
+.cert .name{font-size:26px;font-weight:800;color:var(--brand);min-height:40px}
+
+.menu-toggle{display:none}
+@media (max-width:820px){
+  .course{grid-template-columns:1fr}
+  aside.side{position:static;max-height:none}
+  .menu-toggle{display:inline-block}
+  aside.side.collapsed ol{display:none}
+  .lesson{padding:20px}
+  .top nav .hide-sm{display:none}
+}
+</style>
 </head>
 <body>
-    <h1>Website Chính sách Navoco</h1>
-    <p>Trang web đang trong quá trình phát triển.</p>
+<div class="notice">🚧 Trang web đang trong quá trình phát triển — nội dung chính sách bên dưới là <b>bản mẫu</b>, cần được thay bằng chính sách chính thức.</div>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" onclick="go('home')"><span class="logo-mark">N</span>Học viện Navoco</a>
+    <nav>
+      <button class="btn ghost hide-sm" onclick="go('home')">Khoá học</button>
+      <button class="btn ghost" onclick="go('cert')">Chứng nhận</button>
+      <button class="btn" id="themeBtn" aria-label="Đổi giao diện">🌓</button>
+    </nav>
+  </div>
+</header>
+<main id="app"></main>
+
+<script>
+/* ====== DỮ LIỆU KHOÁ HỌC — chỉnh sửa nội dung tại đây ====== */
+const COURSES = [
+  { id:"gioi-thieu", icon:"🏢", title:"Giới thiệu về Navoco",
+    desc:"Tầm nhìn, sứ mệnh, giá trị cốt lõi và cơ cấu tổ chức.",
+    lessons:[
+      {t:"Tầm nhìn & sứ mệnh", h:`<p>Chào mừng bạn đến với Navoco! Bài học này giúp bạn hiểu công ty hướng tới đâu và vì sao chúng ta làm những gì mình đang làm.</p>
+        <ul><li><b>Tầm nhìn:</b> [Điền tầm nhìn chính thức của Navoco]</li><li><b>Sứ mệnh:</b> [Điền sứ mệnh chính thức của Navoco]</li></ul>
+        <div class="callout">Mọi chính sách trong khoá học này đều xuất phát từ tầm nhìn và sứ mệnh của công ty.</div>`},
+      {t:"Giá trị cốt lõi", h:`<p>Giá trị cốt lõi là kim chỉ nam cho mọi quyết định và hành vi hằng ngày:</p>
+        <ul><li><b>Chính trực</b> — nói thật, làm đúng, kể cả khi không ai nhìn thấy.</li><li><b>Tôn trọng</b> — đối xử công bằng với đồng nghiệp, khách hàng và đối tác.</li><li><b>Trách nhiệm</b> — chủ động nhận việc và chịu trách nhiệm với kết quả.</li><li><b>Đổi mới</b> — không ngừng cải tiến cách làm việc.</li></ul>`},
+      {t:"Cơ cấu tổ chức", h:`<p>Navoco được tổ chức theo các khối/phòng ban. Mỗi nhân viên có một quản lý trực tiếp — đây là người đầu tiên bạn liên hệ khi có thắc mắc về công việc hoặc chính sách.</p>
+        <div class="callout">Bộ phận Nhân sự (HR) là đầu mối giải đáp mọi câu hỏi liên quan đến chính sách công ty.</div>`}
+    ],
+    quiz:[
+      {q:"Khi có thắc mắc về chính sách, bạn nên liên hệ ai trước tiên?", o:["Khách hàng","Quản lý trực tiếp hoặc phòng Nhân sự","Bạn bè ngoài công ty"], a:1},
+      {q:"Giá trị “Chính trực” có nghĩa là gì?", o:["Chỉ làm đúng khi có người giám sát","Nói thật, làm đúng kể cả khi không ai nhìn thấy","Hoàn thành việc nhanh nhất có thể"], a:1}
+    ]},
+  { id:"ung-xu", icon:"🤝", title:"Quy tắc ứng xử",
+    desc:"Chuẩn mực hành vi, môi trường làm việc tôn trọng và chống quấy rối.",
+    lessons:[
+      {t:"Chuẩn mực hành vi", h:`<p>Mọi nhân viên Navoco cần cư xử chuyên nghiệp, lịch sự và tôn trọng trong mọi tình huống — tại văn phòng, khi làm việc từ xa và trên mạng xã hội.</p>
+        <ul><li>Trang phục phù hợp với tính chất công việc.</li><li>Đúng giờ trong các cuộc họp và cam kết.</li><li>Giao tiếp rõ ràng, tôn trọng ý kiến khác biệt.</li></ul>`},
+      {t:"Chống phân biệt đối xử & quấy rối", h:`<p>Navoco không chấp nhận bất kỳ hành vi phân biệt đối xử hay quấy rối nào dựa trên giới tính, tuổi tác, tôn giáo, dân tộc, khuyết tật hay bất kỳ đặc điểm cá nhân nào khác.</p>
+        <div class="callout warn">Nếu bạn chứng kiến hoặc là nạn nhân, hãy báo cáo ngay cho quản lý, phòng Nhân sự hoặc kênh báo cáo ẩn danh. Người báo cáo sẽ được bảo vệ khỏi mọi hành vi trả đũa.</div>`}
+    ],
+    quiz:[
+      {q:"Bạn chứng kiến đồng nghiệp bị quấy rối. Bạn nên làm gì?", o:["Im lặng để tránh rắc rối","Báo cáo cho quản lý, HR hoặc kênh ẩn danh","Đăng lên mạng xã hội"], a:1},
+      {q:"Quy tắc ứng xử áp dụng ở đâu?", o:["Chỉ tại văn phòng","Tại văn phòng, khi làm từ xa và trên mạng xã hội","Chỉ trong giờ hành chính"], a:1}
+    ]},
+  { id:"nhan-su", icon:"📅", title:"Chính sách nhân sự",
+    desc:"Thời gian làm việc, nghỉ phép, lương thưởng và phúc lợi.",
+    lessons:[
+      {t:"Thời gian làm việc", h:`<p>Thời gian làm việc tiêu chuẩn: <b>[Điền giờ làm việc, ví dụ 8:30 – 17:30, thứ Hai – thứ Sáu]</b>.</p>
+        <ul><li>Đi muộn/về sớm cần báo trước cho quản lý.</li><li>Làm thêm giờ phải được phê duyệt trước.</li></ul>`},
+      {t:"Nghỉ phép", h:`<p>Nhân viên chính thức được hưởng <b>[số] ngày phép năm</b> theo quy định của Bộ luật Lao động và chính sách công ty.</p>
+        <ul><li>Đăng ký nghỉ phép trước ít nhất <b>[số] ngày</b> qua hệ thống.</li><li>Nghỉ ốm cần có giấy xác nhận y tế khi nghỉ từ <b>[số] ngày</b> trở lên.</li></ul>`},
+      {t:"Lương, thưởng & phúc lợi", h:`<p>Lương được chi trả vào ngày <b>[ngày]</b> hằng tháng. Thông tin lương là bảo mật — không chia sẻ với người khác.</p>
+        <ul><li>Bảo hiểm xã hội, y tế, thất nghiệp theo quy định.</li><li>Thưởng theo hiệu quả công việc và kết quả kinh doanh.</li><li>[Bổ sung các phúc lợi khác của Navoco]</li></ul>`}
+    ],
+    quiz:[
+      {q:"Làm thêm giờ cần điều kiện gì?", o:["Tự quyết định","Được phê duyệt trước","Chỉ cần báo sau"], a:1},
+      {q:"Thông tin lương của bạn nên được xử lý thế nào?", o:["Giữ bảo mật","Chia sẻ công khai","Đăng lên nhóm chat chung"], a:0}
+    ]},
+  { id:"bao-mat", icon:"🔒", title:"Bảo mật thông tin",
+    desc:"Bảo vệ dữ liệu công ty, khách hàng và an toàn thông tin.",
+    lessons:[
+      {t:"Phân loại thông tin", h:`<p>Thông tin tại Navoco được chia thành các cấp độ:</p>
+        <ul><li><b>Công khai</b> — có thể chia sẻ ra bên ngoài.</li><li><b>Nội bộ</b> — chỉ dùng trong công ty.</li><li><b>Mật</b> — chỉ người được phân quyền mới truy cập.</li></ul>`},
+      {t:"Mật khẩu & thiết bị", h:`<ul><li>Dùng mật khẩu mạnh, không dùng lại, không chia sẻ cho bất kỳ ai.</li><li>Bật xác thực hai lớp (2FA) cho tài khoản công việc.</li><li>Khoá màn hình khi rời khỏi máy tính.</li></ul>
+        <div class="callout warn">Cảnh giác với email lừa đảo (phishing): không bấm vào liên kết lạ, kiểm tra kỹ địa chỉ người gửi.</div>`},
+      {t:"Báo cáo sự cố", h:`<p>Nếu nghi ngờ mất thiết bị, lộ mật khẩu hoặc rò rỉ dữ liệu, hãy báo ngay cho bộ phận IT. Báo cáo sớm giúp giảm thiểu thiệt hại.</p>`}
+    ],
+    quiz:[
+      {q:"Bạn nhận email lạ yêu cầu nhập mật khẩu. Bạn làm gì?", o:["Nhập ngay","Không bấm liên kết và báo bộ phận IT","Chuyển tiếp cho đồng nghiệp"], a:1},
+      {q:"Khi rời khỏi máy tính, bạn nên?", o:["Để nguyên","Khoá màn hình","Tắt màn hình nhưng không khoá"], a:1}
+    ]},
+  { id:"an-toan", icon:"🦺", title:"An toàn & sức khoẻ",
+    desc:"An toàn lao động, phòng cháy chữa cháy và xử lý tình huống khẩn cấp.",
+    lessons:[
+      {t:"An toàn nơi làm việc", h:`<p>Giữ khu vực làm việc gọn gàng, không để dây điện, vật dụng gây vấp ngã. Báo ngay các nguy cơ mất an toàn cho quản lý.</p>`},
+      {t:"Phòng cháy & sơ tán", h:`<ul><li>Nắm rõ vị trí lối thoát hiểm và bình chữa cháy.</li><li>Khi có báo cháy: bình tĩnh, không dùng thang máy, di chuyển theo lối thoát hiểm đến điểm tập trung.</li></ul>`}
+    ],
+    quiz:[
+      {q:"Khi có báo cháy, bạn KHÔNG nên làm gì?", o:["Đi theo lối thoát hiểm","Dùng thang máy","Đến điểm tập trung"], a:1}
+    ]},
+  { id:"liem-chinh", icon:"⚖️", title:"Liêm chính & xung đột lợi ích",
+    desc:"Chống tham nhũng, quà tặng và xử lý xung đột lợi ích.",
+    lessons:[
+      {t:"Quà tặng & chiêu đãi", h:`<p>Không nhận hoặc tặng quà, tiền, chiêu đãi có thể ảnh hưởng đến quyết định công việc. Quà có giá trị vượt <b>[mức giá trị]</b> phải được khai báo.</p>`},
+      {t:"Xung đột lợi ích", h:`<p>Xung đột lợi ích xảy ra khi lợi ích cá nhân có thể ảnh hưởng đến quyết định công việc (ví dụ: chọn nhà cung cấp là công ty của người thân).</p>
+        <div class="callout">Nguyên tắc vàng: khi phân vân — hãy khai báo với quản lý.</div>`}
+    ],
+    quiz:[
+      {q:"Nhà cung cấp là công ty của người thân bạn. Bạn nên?", o:["Âm thầm chọn họ","Khai báo xung đột lợi ích với quản lý","Từ chối nói chuyện"], a:1},
+      {q:"Đối tác tặng quà giá trị lớn. Bạn nên?", o:["Nhận và giữ kín","Từ chối hoặc khai báo theo quy định","Chia cho cả nhóm"], a:1}
+    ]}
+];
+const PASS = 0.8; // tỉ lệ đúng để qua bài kiểm tra
+
+/* ====== Trạng thái (lưu trên trình duyệt) ====== */
+const KEY="navoco-academy-v1";
+let S={done:{},quiz:{},name:""};
+try{const r=localStorage.getItem(KEY); if(r) S={...S,...JSON.parse(r)};}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+
+const lessonDone=(c,i)=>!!S.done[c.id+":"+i];
+const quizPassed=c=>!!S.quiz[c.id];
+const steps=c=>c.lessons.length+1;
+const doneSteps=c=>c.lessons.filter((_,i)=>lessonDone(c,i)).length+(quizPassed(c)?1:0);
+const pct=c=>Math.round(doneSteps(c)/steps(c)*100);
+const allDone=()=>COURSES.every(c=>pct(c)===100);
+const totalPct=()=>Math.round(COURSES.reduce((s,c)=>s+doneSteps(c),0)/COURSES.reduce((s,c)=>s+steps(c),0)*100);
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+
+const app=document.getElementById("app");
+
+/* ====== Router đơn giản bằng hash ====== */
+function go(view,cid,step){location.hash=[view,cid,step].filter(x=>x!==undefined).join("/");}
+window.addEventListener("hashchange",render);
+
+function render(){
+  const [view,cid,step]=location.hash.slice(1).split("/");
+  window.scrollTo(0,0);
+  if(view==="course"){const c=COURSES.find(x=>x.id===cid); if(c) return renderCourse(c,step);}
+  if(view==="cert") return renderCert();
+  renderHome();
+}
+
+function renderHome(){
+  const lessons=COURSES.reduce((s,c)=>s+c.lessons.length,0);
+  const finished=COURSES.filter(c=>pct(c)===100).length;
+  app.innerHTML=`
+  <section class="hero"><div class="wrap">
+    <span class="badge">Khoá đào tạo hội nhập</span>
+    <h1>Chính sách Navoco<br>— học dễ, nhớ lâu</h1>
+    <p class="lead">Tìm hiểu toàn bộ chính sách, quy định và văn hoá của Navoco qua các bài học ngắn, kèm bài kiểm tra và chứng nhận hoàn thành.</p>
+    <button class="btn primary" onclick="continueLearning()">${totalPct()>0?"Tiếp tục học":"Bắt đầu học"} →</button>
+    <div class="stats">
+      <div class="stat"><b>${COURSES.length}</b><span>Học phần</span></div>
+      <div class="stat"><b>${lessons}</b><span>Bài học</span></div>
+      <div class="stat"><b>${finished}/${COURSES.length}</b><span>Đã hoàn thành</span></div>
+      <div class="stat" style="flex:1;min-width:200px"><b>${totalPct()}%</b><span>Tiến độ tổng</span><div class="progress" style="margin-top:8px"><i style="width:${totalPct()}%"></i></div></div>
+    </div>
+  </div></section>
+  <section class="wrap">
+    <h2 class="sec">Các học phần</h2>
+    <div class="grid">
+      ${COURSES.map((c,n)=>`
+        <button class="card" onclick="go('course','${c.id}')">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="ico">${c.icon}</div>
+            ${pct(c)===100?'<span class="badge ok">✓ Hoàn thành</span>':`<span class="badge">Học phần ${n+1}</span>`}
+          </div>
+          <h3>${c.title}</h3>
+          <p>${c.desc}</p>
+          <div class="meta"><span>${c.lessons.length} bài học · ${c.quiz.length} câu hỏi</span><span>${pct(c)}%</span></div>
+          <div class="progress"><i style="width:${pct(c)}%"></i></div>
+        </button>`).join("")}
+    </div>
+  </section>`;
+}
+
+function continueLearning(){
+  for(const c of COURSES){
+    const i=c.lessons.findIndex((_,k)=>!lessonDone(c,k));
+    if(i>=0) return go("course",c.id,i);
+    if(!quizPassed(c)) return go("course",c.id,"quiz");
+  }
+  go("cert");
+}
+
+function renderCourse(c,step){
+  const isQuiz=step==="quiz";
+  const i=isQuiz?-1:Math.min(Math.max(parseInt(step)||0,0),c.lessons.length-1);
+  const idx=COURSES.indexOf(c);
+  app.innerHTML=`
+  <div class="wrap course">
+    <aside class="side" id="side">
+      <button class="btn ghost" style="padding:4px 0" onclick="go('home')">← Tất cả học phần</button>
+      <h4>${c.icon} ${c.title}</h4>
+      <div class="sub">${pct(c)}% hoàn thành</div>
+      <div class="progress"><i style="width:${pct(c)}%"></i></div>
+      <button class="btn menu-toggle" style="margin-top:12px;width:100%" onclick="document.getElementById('side').classList.toggle('collapsed')">Danh sách bài học ▾</button>
+      <ol>
+        ${c.lessons.map((l,k)=>`<li><button class="${k===i?"active":""}" onclick="go('course','${c.id}',${k})"><span class="dot ${lessonDone(c,k)?"done":""}">${lessonDone(c,k)?"✓":k+1}</span>${l.t}</button></li>`).join("")}
+        <li><button class="${isQuiz?"active":""}" onclick="go('course','${c.id}','quiz')"><span class="dot ${quizPassed(c)?"done":""}">${quizPassed(c)?"✓":"?"}</span>Bài kiểm tra</button></li>
+      </ol>
+    </aside>
+    <article class="lesson">${isQuiz?quizHTML(c,idx):lessonHTML(c,i)}</article>
+  </div>`;
+  if(window.innerWidth<=820) document.getElementById("side").classList.add("collapsed");
+}
+
+function lessonHTML(c,i){
+  const l=c.lessons[i], last=i===c.lessons.length-1;
+  return `
+    <div class="crumb">Bài ${i+1}/${c.lessons.length}</div>
+    <h2>${l.t}</h2>
+    <div class="body">${l.h}</div>
+    <div class="foot">
+      <button class="btn" ${i===0?"disabled":""} onclick="go('course','${c.id}',${i-1})">← Bài trước</button>
+      <button class="btn primary" onclick="complete('${c.id}',${i})">${last?"Hoàn thành & làm bài kiểm tra →":"Hoàn thành & tiếp tục →"}</button>
+    </div>`;
+}
+
+function complete(cid,i){
+  const c=COURSES.find(x=>x.id===cid);
+  S.done[cid+":"+i]=true; save();
+  go("course",cid,i<c.lessons.length-1?i+1:"quiz");
+}
+
+let picks={};
+function quizHTML(c,idx){
+  picks={};
+  const next=COURSES[idx+1];
+  return `
+    <div class="crumb">Bài kiểm tra · cần đúng ${Math.ceil(c.quiz.length*PASS)}/${c.quiz.length} câu để qua</div>
+    <h2>Kiểm tra: ${c.title}</h2>
+    ${quizPassed(c)?'<div class="result ok" style="margin-bottom:20px">✓ Bạn đã qua bài kiểm tra này. Có thể làm lại để ôn tập.</div>':""}
+    <div id="qs">${c.quiz.map((q,qi)=>`
+      <div class="q"><p>${qi+1}. ${q.q}</p>
+        ${q.o.map((o,oi)=>`<button class="opt" data-q="${qi}" data-o="${oi}" onclick="pick(${qi},${oi})">${o}</button>`).join("")}
+      </div>`).join("")}</div>
+    <div id="res"></div>
+    <div class="foot">
+      <button class="btn" onclick="go('course','${c.id}',${c.lessons.length-1})">← Xem lại bài học</button>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn primary" id="submit" onclick="grade('${c.id}')">Nộp bài</button>
+        <button class="btn primary" id="next" style="display:none" onclick="${next?`go('course','${next.id}')`:`go('cert')`}">${next?"Học phần tiếp theo →":"Nhận chứng nhận →"}</button>
+      </span>
+    </div>`;
+}
+function pick(qi,oi){
+  if(document.getElementById("submit").disabled) return;
+  picks[qi]=oi;
+  document.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(b=>b.classList.toggle("sel",+b.dataset.o===oi));
+}
+function grade(cid){
+  const c=COURSES.find(x=>x.id===cid);
+  if(Object.keys(picks).length<c.quiz.length){
+    document.getElementById("res").innerHTML=`<div class="result bad">Vui lòng trả lời tất cả ${c.quiz.length} câu hỏi.</div>`;return;
+  }
+  let score=0;
+  c.quiz.forEach((q,qi)=>{
+    if(picks[qi]===q.a) score++;
+    document.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(b=>{
+      const o=+b.dataset.o;
+      if(o===q.a) b.classList.add("right"); else if(o===picks[qi]) b.classList.add("wrong");
+    });
+  });
+  const ok=score/c.quiz.length>=PASS;
+  const submit=document.getElementById("submit");
+  if(ok){ S.quiz[cid]=true; save(); submit.style.display="none"; document.getElementById("next").style.display="";}
+  else{ submit.textContent="Làm lại"; submit.onclick=()=>render(); }
+  document.getElementById("res").innerHTML=`<div class="result ${ok?"ok":"bad"}">${ok?"🎉 Chúc mừng! ":"Chưa đạt. "}Bạn trả lời đúng ${score}/${c.quiz.length} câu.${ok?"":" Hãy xem lại bài học và thử lại."}</div>`;
+}
+
+function renderCert(){
+  const done=allDone();
+  const today=new Date().toLocaleDateString("vi-VN");
+  app.innerHTML=`<div class="wrap">
+    <div class="cert">
+      ${done?`
+        <div style="font-size:44px">🏅</div>
+        <div class="badge ok">Hoàn thành khoá học</div>
+        <h2>Chứng nhận hoàn thành</h2>
+        <p style="color:var(--muted)">Khoá đào tạo Chính sách Navoco được cấp cho</p>
+        <div class="name" id="certName">${esc(S.name)||"&nbsp;"}</div>
+        <input id="nameIn" placeholder="Nhập họ tên của bạn" value="${esc(S.name)}" oninput="S.name=this.value;save();document.getElementById('certName').textContent=this.value||'\\u00a0'">
+        <p style="color:var(--muted);font-size:14px">Ngày cấp: ${today}</p>
+        <button class="btn" onclick="window.print()">🖨️ In chứng nhận</button>
+      `:`
+        <div style="font-size:44px">🔒</div>
+        <h2>Chưa mở khoá chứng nhận</h2>
+        <p style="color:var(--muted)">Hoàn thành tất cả học phần và bài kiểm tra để nhận chứng nhận. Tiến độ hiện tại: <b>${totalPct()}%</b></p>
+        <div class="progress" style="max-width:360px;margin:16px auto"><i style="width:${totalPct()}%"></i></div>
+        <button class="btn primary" onclick="continueLearning()">Tiếp tục học →</button>
+        <p><button class="btn ghost" style="font-size:13px;color:var(--muted)" onclick="if(confirm('Xoá toàn bộ tiến độ học?')){S={done:{},quiz:{},name:''};save();render();}">Đặt lại tiến độ</button></p>
+      `}
+    </div></div>`;
+}
+
+/* Theme toggle */
+const themeBtn=document.getElementById("themeBtn");
+try{const t=localStorage.getItem(KEY+"-theme"); if(t) document.documentElement.dataset.theme=t;}catch(e){}
+themeBtn.onclick=()=>{
+  const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+  const t=dark?"light":"dark"; document.documentElement.dataset.theme=t;
+  try{localStorage.setItem(KEY+"-theme",t)}catch(e){}
+};
+
+render();
+</script>
 </body>
 </html>
